@@ -33,9 +33,9 @@ func LoadDB() {
 }
 
 func DBConnect(pid int) interface{} {
-	// mongousername := "mongoadmin"
-	// mongopass := "secret"
-	mongo_client, mc_err := mongo.Connect(context.TODO(), options.Client().ApplyURI("mongodb://mongoadmin:secret@localhost:27017"))
+	mongouser := os.Getenv("MONGOUSER")
+	mongopass := os.Getenv("MONGOPASS")
+	mongo_client, mc_err := mongo.Connect(context.TODO(), options.Client().ApplyURI("mongodb://"+mongouser+":"+mongopass+"@localhost:27017"))
 	if mc_err != nil {
 		log.Println(mc_err)
 	}
@@ -52,7 +52,6 @@ func DBConnect(pid int) interface{} {
 	if findererr != nil {
 		log.Println(findererr)
 	}
-	//jsons, _ := json.Marshal(searchResults)
 	return searchResults
 }
 
